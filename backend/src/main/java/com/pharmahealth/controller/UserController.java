@@ -140,9 +140,9 @@ public class UserController {
 
     @GetMapping("/staff")
     @PreAuthorize("hasRole('ADMIN')")
-    @Operation(summary = "List administrator and staff accounts (Admin only)")
+    @Operation(summary = "List administrator and pharmacist accounts (Admin only)")
     public ResponseEntity<?> getStaffMembers() {
-        List<User> admins = userRepository.findByRole(ERole.ROLE_ADMIN);
+        List<User> admins = userRepository.findByRoleIn(List.of(ERole.ROLE_ADMIN, ERole.ROLE_PHARMACIST));
         List<Map<String, Object>> response = new ArrayList<>();
 
         for (User u : admins) {
@@ -152,6 +152,9 @@ public class UserController {
             map.put("fullName", u.getFullName());
             map.put("email", u.getEmail());
             map.put("phone", u.getPhone());
+            map.put("roles", u.getRoles().stream()
+                    .map(r -> r.getName().name())
+                    .collect(Collectors.toList()));
             map.put("createdAt", u.getCreatedAt());
             response.add(map);
         }

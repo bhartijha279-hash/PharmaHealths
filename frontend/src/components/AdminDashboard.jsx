@@ -62,28 +62,28 @@ export default function AdminDashboard({ categories, onRefreshMedicines, activeT
     try {
       if (tab === 'customers') {
         const [custRes, staffRes] = await Promise.all([
-          userService.getActiveCustomers({ forceFresh }),
-          userService.getStaffMembers({ forceFresh }).catch(() => ({ data: [] }))
+          userService.getActiveCustomers(forceFresh),
+          userService.getStaffMembers(forceFresh).catch(() => ({ data: [] }))
         ]);
         setCustomers(custRes.data);
         setStaff(staffRes.data);
       } else if (tab === 'inventory') {
-        const res = await medicineService.getMedicines(null, '', { forceFresh });
+        const res = await medicineService.getMedicines(null, '', forceFresh);
         setMedicines(res.data);
       } else if (tab === 'billing') {
-        const res = await billService.getAllBills({ forceFresh });
+        const res = await billService.getAllBills(forceFresh);
         setBills(res.data);
       } else if (tab === 'support') {
-        const res = await supportService.getAllTickets({ forceFresh });
+        const res = await supportService.getAllTickets(forceFresh);
         setTickets(res.data);
       } else if (tab === 'prescriptions') {
-        const res = await prescriptionService.getAllPrescriptions({ forceFresh });
+        const res = await prescriptionService.getAllPrescriptions(forceFresh);
         setPrescriptions(res.data);
       } else if (tab === 'notifications') {
         const [medRes, ticketRes, rxRes] = await Promise.all([
-          medicineService.getMedicines(null, '', { forceFresh }),
-          supportService.getAllTickets({ forceFresh }),
-          prescriptionService.getAllPrescriptions({ forceFresh })
+          medicineService.getMedicines(null, '', forceFresh),
+          supportService.getAllTickets(forceFresh),
+          prescriptionService.getAllPrescriptions(forceFresh)
         ]);
         setMedicines(medRes.data);
         setTickets(ticketRes.data);

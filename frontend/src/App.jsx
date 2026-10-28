@@ -34,8 +34,8 @@ export default function App() {
   const fetchCatalog = async (forceFresh = false) => {
     try {
       const [medRes, catRes] = await Promise.all([
-        medicineService.getMedicines(selectedCategory, searchTerm, { forceFresh }),
-        medicineService.getCategories({ forceFresh })
+        medicineService.getMedicines(selectedCategory, searchTerm, forceFresh),
+        medicineService.getCategories(forceFresh)
       ]);
       setMedicines(medRes.data);
       setCategories(catRes.data);
@@ -47,7 +47,7 @@ export default function App() {
   const fetchUserOrders = async (forceFresh = false) => {
     if (currentUser) {
       try {
-        const res = await orderService.getMyOrders({ forceFresh });
+        const res = await orderService.getMyOrders(forceFresh);
         setMyOrders(res.data);
       } catch (err) {
         console.error('Error fetching user orders:', err);
@@ -368,6 +368,10 @@ export default function App() {
         onCheckout={handleCheckout}
         currentUser={currentUser}
         onNavigateToOrders={() => setCurrentView('orders')}
+        onOpenPrescription={() => {
+          setIsCartOpen(false);
+          setIsPrescriptionOpen(true);
+        }}
       />
 
       <PrescriptionUploadModal

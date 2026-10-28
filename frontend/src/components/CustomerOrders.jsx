@@ -18,8 +18,8 @@ export default function CustomerOrders({ currentUser, onOpenLogin }) {
     }
     try {
       const [orderRes, billRes] = await Promise.all([
-        orderService.getMyOrders({ forceFresh }),
-        billService.getMyBills({ forceFresh })
+        orderService.getMyOrders(forceFresh),
+        billService.getMyBills(forceFresh)
       ]);
       setOrders(orderRes.data);
       setBills(billRes.data);

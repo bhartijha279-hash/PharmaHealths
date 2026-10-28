@@ -133,9 +133,12 @@ When deploying the blueprint via `render.yaml` or setting environment variables 
 
 | Role | Username | Password |
 |---|---|---|
-| **Admin** | `admin` | `password123` |
-| **Pharmacist** | `pharmacist1` | `password123` |
-| **Customer** | `johndoe` | `password123` |
+| **Admin** | `admin` | `admin123` |
+| **Customer** | `rohit.sharma` | `password123` |
+| **Customer** | `ananya.verma` | `password123` |
+| **Customer** | `rahul.mehta` | `password123` |
+
+Additional admin/pharmacist accounts can be created by an admin from the dashboard (`POST /api/users/create-admin`).
 
 ---
 

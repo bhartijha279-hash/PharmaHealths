@@ -15,7 +15,7 @@ export default function CustomerSupport({ currentUser, onOpenLogin }) {
     if (!currentUser) return;
     setLoading(true);
     try {
-      const res = await supportService.getMyTickets({ forceFresh });
+      const res = await supportService.getMyTickets(forceFresh);
       setTickets(res.data);
     } catch (err) {
       console.error(err);

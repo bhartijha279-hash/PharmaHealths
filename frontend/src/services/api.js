@@ -138,6 +138,7 @@ export const medicineService = {
 export const orderService = {
   placeOrder: (orderData) => {
     invalidateCache('orders');
+    invalidateCache('bills');
     invalidateCache('medicines');
     return api.post('/orders', orderData);
   },
@@ -145,7 +146,10 @@ export const orderService = {
   getAllOrders: (forceFresh = false) => cachedGet('/orders', {}, forceFresh),
   trackDelivery: (trackingNumber) => api.get(`/orders/track/${trackingNumber}`),
   updateStatus: (id, status, deliveryNotes) => {
+    // Cancelling or delivering an order also changes stock and billing
     invalidateCache('orders');
+    invalidateCache('bills');
+    invalidateCache('medicines');
     return api.patch(`/orders/${id}/status`, null, { params: { status, deliveryNotes } });
   },
 };
